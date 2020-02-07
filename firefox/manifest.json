@@ -1,5 +1,4 @@
 {
-
   "manifest_version": 2,
   "name": "Wasp Blocker",
   "version": "1.0",
@@ -14,11 +13,10 @@
   "content_scripts": [
     {
       "matches": ["*://therightstuff.biz/bang/topic/*"],
-      "js": ["wasp.js"]
+      "js": ["./src/inject.js"]
     }
   ],
+  "web_accessible_resources": ["src/blacklist.js", "src/wasp.js"],  
 
-  "permissions": [
-    "activeTab"
-  ]
+  "permissions": ["activeTab", "storage"]
 }
