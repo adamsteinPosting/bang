@@ -51,8 +51,28 @@ function downvotePost(postDiv) {
     }
 }
 
-function hidePost() {
+function hidePost(node) {
+    if (node.parentNode.className === "post-username") {
+        let postDiv = profileLinks[i].parentNode.parentNode.parentNode.parentNode;
+        let postMessage = postDiv.querySelector(".post-message");
+        postMessage.style.display = "none";
+        downvotePost(postDiv);
+        while (postDiv.firstChild) {
+            postDiv.removeChild(postDiv.firstChild);
+        }
 
+        /*
+        hideChildren(postDiv);
+        //profileLinks[i].parentNode.parentNode.parentNode.parentNode.style.display = "none";
+        //profileLinks[i].parentNode.parentNode.parentNode.parentNode.style.height = "50px";
+        //profileLinks[i].parentNode.parentNode.parentNode.parentNode.style.overflow = "hidden";
+        */
+        let node = document.createElement("h1");
+        var textnode = document.createTextNode("User Blocked");
+        node.appendChild(textnode);
+        postDiv.appendChild(node);
+        postDiv.style.backgroundColor = "black";
+    }
 }
 
 var profileLinks = document.getElementsByClassName("profile-link");
@@ -60,27 +80,9 @@ var i;
 for (i = 0; i < profileLinks.length; i++) {
     let node = profileLinks[i];
     let content = node.textContent;
-    if (content.indexOf(wasp) !== -1) {
-        if (node.parentNode.className === "post-username") {
-            let postDiv = profileLinks[i].parentNode.parentNode.parentNode.parentNode;
-            let postMessage = postDiv.querySelector(".post-message");
-            postMessage.style.display = "none";
-            downvotePost(postDiv);
-            while (postDiv.firstChild) {
-                postDiv.removeChild(postDiv.firstChild);
-            }
-
-            /*
-            hideChildren(postDiv);
-            //profileLinks[i].parentNode.parentNode.parentNode.parentNode.style.display = "none";
-            //profileLinks[i].parentNode.parentNode.parentNode.parentNode.style.height = "50px";
-            //profileLinks[i].parentNode.parentNode.parentNode.parentNode.style.overflow = "hidden";
-            */
-            let node = document.createElement("h1");
-            var textnode = document.createTextNode("User Blocked");
-            node.appendChild(textnode);
-            postDiv.appendChild(node);
-            postDiv.style.backgroundColor = "black";
+    for (let j = 0; j < users.length; j++) {
+        if (content.indexOf(users[j]) !== -1) {
+            hidePost(node);
         }
     }
 }
